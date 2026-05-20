@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+    h1 {
+      color: gold;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #2a2a2a;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      background: gold;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cart-box">
+  <h1>Place Your Gold Order</h1>
+
+  <input type="text" id="productName" readonly>
+
+  <input type="number" id="quantity" placeholder="How many items do you want?" min="1">
+
+  <textarea id="deliveryAddress" placeholder="Delivery Address"></textarea>
+
+  <button onclick="submitOrder()">Submit Order</button>
+</div>
+
+<script>
+  const selectedProduct = localStorage.getItem('selectedProduct');
+
+  document.getElementById('productName').value = selectedProduct;
+
+  function submitOrder() {
+    const product = document.getElementById('productName').value;
+    const quantity = document.getElementById('quantity').value;
+    const address = document.getElementById('deliveryAddress').value;
+
+    if(!quantity || !address) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    alert(
+      `Order Submitted Successfully!
+
+Product: ${product}
+Quantity: ${quantity}
+Address: ${address}`
+    );
+  }
+</script>
+
+</body>
+</html>
