@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Placed - Amira Aldahab Gold</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#0d0d0d;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+.box{
+  background:#111;
+  padding:30px;
+  border-radius:15px;
+  border:1px solid rgba(255,215,0,0.3);
+  width:100%;
+  max-width:400px;
+  text-align:center;
+}
+
+h1{
+  color:gold;
+  margin-bottom:10px;
+}
+
+.status{
+  color:#25D366;
+  font-weight:700;
+  margin:10px 0;
+}
+
+.orderBox{
+  text-align:left;
+  margin-top:15px;
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:10px;
+}
+
+.orderBox p{
+  margin:6px 0;
+  font-size:14px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  background:gold;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.small{
+  font-size:12px;
+  opacity:0.7;
+  margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h1>🎉 Order Placed</h1>
+
+  <div class="status">Under Review for Delivery</div>
+
+  <p>Thank you for shopping with Amira Aldahab Gold.</p>
+
+  <!-- ORDER DETAILS -->
+  <div class="orderBox" id="orderDetails"></div>
+
+  <button onclick="goHome()">Back to Shop</button>
+
+  <div class="small">We will contact you shortly via WhatsApp or phone</div>
+
+</div>
+
+<script>
+
+const order = JSON.parse(localStorage.getItem("lastOrder"));
+
+const box = document.getElementById("orderDetails");
+
+if(order){
+
+  box.innerHTML = `
+    <p><b>Product:</b> ${order.product}</p>
+    <p><b>Price:</b> $${order.price}</p>
+    <p><b>Quantity:</b> ${order.quantity}</p>
+    <p><b>Total:</b> $${order.total}</p>
+    <p><b>Name:</b> ${order.customer.name}</p>
+    <p><b>Phone:</b> ${order.customer.phone}</p>
+    <p><b>Status:</b> ${order.status}</p>
+  `;
+
+}else{
+  box.innerHTML = "<p>No order data found</p>";
+}
+
+function goHome(){
+  window.location.href = "dashboard.html";
+}
+
+</script>
+
+</body>
+</html>
