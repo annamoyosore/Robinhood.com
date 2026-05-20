@@ -137,6 +137,7 @@ button{
 
 .buy{
   background:gold;
+  color:black;
 }
 
 /* SUPPORT */
@@ -152,10 +153,6 @@ button{
 .support p{
   opacity:0.8;
   margin-bottom:10px;
-}
-
-.support button{
-  margin-top:10px;
 }
 
 /* EXTRA BUTTONS */
@@ -222,7 +219,7 @@ button{
   <p data-i18n="subtitle">Premium Arabian Gold Jewelry Collection</p>
 </div>
 
-<!-- PRODUCTS -->
+<!-- PRODUCTS (7 ITEMS ONLY) -->
 <div class="products">
 
   <div class="card">
@@ -230,9 +227,7 @@ button{
     <div class="card-content">
       <h3>Gold Necklace</h3>
       <div class="price">$120</div>
-      <button class="buy" onclick="buyNow('Gold Necklace',120,'https://images.unsplash.com/photo-1611652022419-a9419f74343d')">
-        Buy
-      </button>
+      <button class="buy" onclick="buyNow('Gold Necklace',120,'https://images.unsplash.com/photo-1611652022419-a9419f74343d')">Buy</button>
     </div>
   </div>
 
@@ -241,9 +236,7 @@ button{
     <div class="card-content">
       <h3>Gold Chain</h3>
       <div class="price">$95</div>
-      <button class="buy" onclick="buyNow('Gold Chain',95,'https://images.unsplash.com/photo-1629224316810-9d8805b95e76')">
-        Buy
-      </button>
+      <button class="buy" onclick="buyNow('Gold Chain',95,'https://images.unsplash.com/photo-1629224316810-9d8805b95e76')">Buy</button>
     </div>
   </div>
 
@@ -252,9 +245,7 @@ button{
     <div class="card-content">
       <h3>Wedding Ring</h3>
       <div class="price">$150</div>
-      <button class="buy" onclick="buyNow('Wedding Ring',150,'https://images.unsplash.com/photo-1605100804763-247f67b3557e')">
-        Buy
-      </button>
+      <button class="buy" onclick="buyNow('Wedding Ring',150,'https://images.unsplash.com/photo-1605100804763-247f67b3557e')">Buy</button>
     </div>
   </div>
 
@@ -263,9 +254,34 @@ button{
     <div class="card-content">
       <h3>Gold Bracelet</h3>
       <div class="price">$110</div>
-      <button class="buy" onclick="buyNow('Gold Bracelet',110,'https://images.unsplash.com/photo-1619119069152-a2b331eb392a')">
-        Buy
-      </button>
+      <button class="buy" onclick="buyNow('Gold Bracelet',110,'https://images.unsplash.com/photo-1619119069152-a2b331eb392a')">Buy</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236">
+    <div class="card-content">
+      <h3>Gold Earrings</h3>
+      <div class="price">$85</div>
+      <button class="buy" onclick="buyNow('Gold Earrings',85,'https://images.unsplash.com/photo-1635767798638-3e25273a8236')">Buy</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f">
+    <div class="card-content">
+      <h3>Gold Set</h3>
+      <div class="price">$260</div>
+      <button class="buy" onclick="buyNow('Gold Set',260,'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f')">Buy</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0">
+    <div class="card-content">
+      <h3>Diamond Gold Ring</h3>
+      <div class="price">$200</div>
+      <button class="buy" onclick="buyNow('Diamond Gold Ring',200,'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0')">Buy</button>
     </div>
   </div>
 
@@ -279,7 +295,7 @@ button{
 
 </div>
 
-<!-- EXTRA -->
+<!-- BUTTONS -->
 <button class="more" onclick="moreItems()">Check More Items</button>
 <button class="zangi" onclick="openZangi()">Zangi</button>
 <button class="signup" onclick="goSignup()">Sign Up if you have none</button>
@@ -315,31 +331,26 @@ async function loadWallet(){
 }
 loadWallet();
 
-// BUY → SEND FULL ITEM DATA TO CART
+// BUY → CART PAGE
 function buyNow(name, price, image){
-
-  localStorage.setItem("cartItem", JSON.stringify({
-    name,
-    price,
-    image
-  }));
-
-  window.location.href = "cart.html";
+  localStorage.setItem("cartItem", JSON.stringify({name,price,image}));
+  window.location.href="cart.html";
 }
 
 // ABOUT
 function openAbout(){
-  alert("Amira Aldahab Gold is a premium luxury gold marketplace.");
+  alert("Amira Aldahab Gold - Premium Luxury Jewelry Marketplace");
 }
 
 // TESTIMONIES
 function openTestimonies(){
-  alert("⭐⭐⭐⭐⭐ Excellent quality\n⭐⭐⭐⭐⭐ Trusted seller\n⭐⭐⭐⭐⭐ Fast delivery");
+  alert("⭐⭐⭐⭐⭐ Trusted Gold Seller\n⭐⭐⭐⭐⭐ Fast Delivery\n⭐⭐⭐⭐⭐ Premium Quality");
 }
 
-// MORE ITEMS
+// WHATSAPP MORE ITEMS
 function moreItems(){
-  alert("More collections coming soon.");
+  const msg = "Hello Amira Gold, I want more jewelry collections not listed.";
+  window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg), "_blank");
 }
 
 // ZANGI
