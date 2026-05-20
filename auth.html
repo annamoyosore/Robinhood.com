@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth - Amira Aldahab Gold</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#0d0d0d;
+  color:white;
+}
+
+.box{
+  width:100%;
+  max-width:420px;
+  background:#111;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.logo{
+  color:gold;
+  font-size:2rem;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+h2{
+  margin-bottom:10px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border:none;
+  border-radius:8px;
+  background:#222;
+  color:white;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:gold;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.hidden{
+  display:none;
+}
+
+.link{
+  margin-top:12px;
+  color:lightblue;
+  cursor:pointer;
+  user-select:none;
+}
+
+#status{
+  margin-top:10px;
+  color:gold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <div class="logo">Amira Aldahab Gold</div>
+
+  <!-- LOGIN SECTION -->
+  <div id="loginSection">
+
+    <h2>Login</h2>
+
+    <input id="loginEmail" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+
+    <button id="loginBtn">Login</button>
+
+    <div class="link" onclick="showRegister()">
+      Create account
+    </div>
+
+  </div>
+
+  <!-- REGISTER SECTION -->
+  <div id="registerSection" class="hidden">
+
+    <h2>Register</h2>
+
+    <input id="name" placeholder="Full Name">
+    <input id="email" placeholder="Email">
+    <input id="country" placeholder="Country">
+    <input id="phone" placeholder="Phone Number">
+    <input id="password" type="password" placeholder="Password">
+
+    <button id="registerBtn">Register</button>
+
+    <div class="link" onclick="showLogin()">
+      Already have an account? Login
+    </div>
+
+  </div>
+
+  <div id="status"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>
