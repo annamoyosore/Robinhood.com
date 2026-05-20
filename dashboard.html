@@ -33,6 +33,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  flex-wrap:wrap;
 }
 
 .logo{
@@ -47,13 +48,24 @@ body{
   padding:10px 16px;
   border-radius:12px;
   font-weight:700;
+  margin-top:5px;
 }
 
-/* TOP BUTTONS */
+#langSelect{
+  margin-top:10px;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  background:#222;
+  color:white;
+}
+
+/* BUTTONS */
 .top-buttons{
   margin-top:15px;
   display:flex;
   gap:10px;
+  flex-wrap:wrap;
 }
 
 .top-buttons button{
@@ -95,11 +107,6 @@ body{
   border-radius:16px;
   overflow:hidden;
   border:1px solid rgba(255,215,0,0.15);
-  transition:0.3s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
 }
 
 .card img{
@@ -118,9 +125,8 @@ body{
 }
 
 .price{
-  font-size:1.1rem;
   font-weight:700;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .buy-btn{
@@ -129,7 +135,6 @@ body{
   border:none;
   border-radius:10px;
   background:gold;
-  color:black;
   font-weight:700;
   cursor:pointer;
 }
@@ -142,18 +147,17 @@ body{
 
 .support h2{
   color:gold;
-  margin-bottom:10px;
 }
 
 .support p{
   opacity:0.8;
-  margin-bottom:20px;
+  margin-bottom:15px;
 }
 
 .support button{
   width:100%;
   padding:14px;
-  margin-bottom:12px;
+  margin-bottom:10px;
   border:none;
   border-radius:12px;
   font-weight:700;
@@ -180,7 +184,6 @@ body{
   background:#ff4444;
   color:white;
   font-weight:700;
-  cursor:pointer;
 }
 
 </style>
@@ -193,9 +196,7 @@ body{
 
   <div class="top-row">
 
-    <div class="logo">
-      Amira Aldahab Gold
-    </div>
+    <div class="logo">Amira Aldahab Gold</div>
 
     <div class="wallet">
       Wallet: $<span id="balance">0</span>
@@ -203,17 +204,22 @@ body{
 
   </div>
 
-  <!-- TOP BUTTONS -->
+  <!-- LANGUAGE -->
+  <select id="langSelect" onchange="changeLanguage()">
+    <option value="en">English</option>
+    <option value="ar">Arabic</option>
+    <option value="zh">Chinese</option>
+    <option value="es">Spanish</option>
+    <option value="id">Indonesia</option>
+    <option value="ph">Philippines</option>
+    <option value="kw">Kuwait</option>
+    <option value="fr">French</option>
+  </select>
+
+  <!-- BUTTONS -->
   <div class="top-buttons">
-
-    <button onclick="openAbout()">
-      About
-    </button>
-
-    <button onclick="openTestimonies()">
-      Testimonies
-    </button>
-
+    <button onclick="openAbout()">About</button>
+    <button onclick="openTestimonies()">Testimonies</button>
   </div>
 
 </div>
@@ -221,92 +227,47 @@ body{
 <!-- HERO -->
 <div class="hero">
 
-  <h1>Luxury Gold Marketplace</h1>
-
-  <p>
-    Explore premium Arabian gold jewelry collections
-  </p>
+  <h1 data-i18n="title">Luxury Gold Marketplace</h1>
+  <p data-i18n="subtitle">Explore premium Arabian gold jewelry collections</p>
 
 </div>
 
 <!-- PRODUCTS -->
 <div class="products">
 
-  <!-- 1 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=1200">
     <div class="card-content">
-      <h3>Royal Gold Necklace</h3>
+      <h3>Gold Necklace</h3>
       <div class="price">$120</div>
-      <button class="buy-btn"
-      onclick="buyNow('Royal Gold Necklace',120,'https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=1200')">
-      Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyNow('Gold Necklace',120,'img1')">Buy Now</button>
     </div>
   </div>
 
-  <!-- 2 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1629224316810-9d8805b95e76?q=80&w=1200">
     <div class="card-content">
-      <h3>Arabian Gold Chain</h3>
+      <h3>Gold Chain</h3>
       <div class="price">$95</div>
-      <button class="buy-btn"
-      onclick="buyNow('Arabian Gold Chain',95,'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?q=80&w=1200')">
-      Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyNow('Gold Chain',95,'img2')">Buy Now</button>
     </div>
   </div>
 
-  <!-- 3 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1200">
     <div class="card-content">
-      <h3>Gold Wedding Ring</h3>
+      <h3>Wedding Ring</h3>
       <div class="price">$150</div>
-      <button class="buy-btn"
-      onclick="buyNow('Gold Wedding Ring',150,'https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1200')">
-      Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyNow('Wedding Ring',150,'img3')">Buy Now</button>
     </div>
   </div>
 
-  <!-- 4 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1619119069152-a2b331eb392a?q=80&w=1200">
     <div class="card-content">
-      <h3>Luxury Gold Bracelet</h3>
+      <h3>Gold Bracelet</h3>
       <div class="price">$110</div>
-      <button class="buy-btn"
-      onclick="buyNow('Luxury Gold Bracelet',110,'https://images.unsplash.com/photo-1619119069152-a2b331eb392a?q=80&w=1200')">
-      Buy Now
-      </button>
-    </div>
-  </div>
-
-  <!-- 5 -->
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=1200">
-    <div class="card-content">
-      <h3>Premium Gold Earrings</h3>
-      <div class="price">$85</div>
-      <button class="buy-btn"
-      onclick="buyNow('Premium Gold Earrings',85,'https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=1200')">
-      Buy Now
-      </button>
-    </div>
-  </div>
-
-  <!-- 6 -->
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200">
-    <div class="card-content">
-      <h3>Royal Gold Set</h3>
-      <div class="price">$260</div>
-      <button class="buy-btn"
-      onclick="buyNow('Royal Gold Set',260,'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200')">
-      Buy Now
-      </button>
+      <button class="buy-btn" onclick="buyNow('Gold Bracelet',110,'img4')">Buy Now</button>
     </div>
   </div>
 
@@ -315,140 +276,96 @@ body{
 <!-- SUPPORT -->
 <div class="support">
 
-  <h2>
-    Can't find your desired gold product?
-  </h2>
+  <h2 data-i18n="support_title">Can't find your desired gold product?</h2>
 
-  <p>
-    Contact Amira Aldahab Gold directly for custom jewelry orders.
-  </p>
+  <p data-i18n="support_text">Contact Amira Aldahab Gold directly for custom orders.</p>
 
-  <button class="whatsapp" onclick="openWhatsApp()">
-    Contact on WhatsApp
-  </button>
-
-  <button class="zangi" onclick="openZangi()">
-    Contact on Zangi
-  </button>
+  <button class="whatsapp" onclick="openWhatsApp()">WhatsApp</button>
+  <button class="zangi" onclick="openZangi()">Zangi</button>
 
 </div>
 
 <!-- LOGOUT -->
-<button class="logout" onclick="logout()">
-  Logout
-</button>
+<button class="logout" onclick="logout()">Logout</button>
 
 <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
 
 <script>
 
+// APPWRITE
 const client = new Appwrite.Client();
-
-client
-.setEndpoint("https://nyc.cloud.appwrite.io/v1")
+client.setEndpoint("https://nyc.cloud.appwrite.io/v1")
 .setProject("696f9104001dfedc5e1a");
 
 const account = new Appwrite.Account(client);
 const databases = new Appwrite.Databases(client);
 
 const DATABASE_ID = "6970722d00269d80304f";
-const WALLET_COLLECTION_ID = "wallet";
+const WALLET = "wallet";
 
-// ================= LOAD WALLET =================
+// LOAD WALLET
 async function loadWallet(){
-
   try{
-
     const user = await account.get();
-
-    const response = await databases.listDocuments(
-      DATABASE_ID,
-      WALLET_COLLECTION_ID
-    );
-
-    const wallet = response.documents.find(
-      doc => doc.userId === user.$id
-    );
-
-    if(wallet){
-      document.getElementById("balance").innerText =
-      wallet.balance;
-    }
-
-  } catch(err){
-
-    window.location.href = "auth.html";
+    const res = await databases.listDocuments(DATABASE_ID, WALLET);
+    const w = res.documents.find(d => d.userId === user.$id);
+    if(w) document.getElementById("balance").innerText = w.balance;
+  }catch{
+    window.location.href="auth.html";
   }
 }
-
 loadWallet();
 
-// ================= BUY =================
-function buyNow(name, price, image){
-
-  localStorage.setItem("cartItem",
-  JSON.stringify({
-    name,
-    price,
-    image
-  }));
-
-  window.location.href = "cart.html";
+// BUY
+function buyNow(name, price, img){
+  localStorage.setItem("cartItem", JSON.stringify({name,price,img}));
+  window.location.href="cart.html";
 }
 
-// ================= ABOUT =================
+// ABOUT
 function openAbout(){
-
-  alert(
-`Amira Aldahab Gold is a luxury Arabian gold marketplace specializing in wedding rings, necklaces, bracelets, earrings, pendants, and premium gold jewelry collections.`
-  );
+  alert("Amira Aldahab Gold - Premium Arabian Jewelry Marketplace");
 }
 
-// ================= TESTIMONIES =================
+// TESTIMONIES
 function openTestimonies(){
-
-  alert(
-`⭐️⭐️⭐️⭐️⭐️
-"Beautiful gold quality and fast delivery."
-
-⭐️⭐️⭐️⭐️⭐️
-"My wedding ring arrived perfectly."
-
-⭐️⭐️⭐️⭐️⭐️
-"Trusted gold marketplace with premium designs."`
-  );
+  alert("⭐⭐⭐⭐⭐ Great quality gold!\n⭐⭐⭐⭐⭐ Fast delivery!\n⭐⭐⭐⭐⭐ Trusted shop!");
 }
 
-// ================= WHATSAPP =================
+// WHATSAPP
 function openWhatsApp(){
-
-  const message =
-  "Hello Amira Aldahab Gold, I need a jewelry product not listed on the dashboard.";
-
-  const url =
-  "https://wa.me/18622726355?text=" +
-  encodeURIComponent(message);
-
-  window.open(url, "_blank");
+  window.open("https://wa.me/18622726355","_blank");
 }
 
-// ================= ZANGI =================
+// ZANGI
 function openZangi(){
-
-  const zangiLink =
-  "https://zangi.com/dl/conversation/123456789";
-
-  window.open(zangiLink, "_blank");
+  window.open("https://zangi.com","_blank");
 }
 
-// ================= LOGOUT =================
+// LOGOUT
 async function logout(){
+  try{ await account.deleteSession("current"); }catch{}
+  window.location.href="auth.html";
+}
 
-  try{
-    await account.deleteSession("current");
-  } catch(e){}
+// LANGUAGE
+const translations = {
+  en:{title:"Luxury Gold Marketplace",subtitle:"Explore premium Arabian gold jewelry collections",support_title:"Can't find your desired gold product?",support_text:"Contact Amira Gold for custom orders"},
+  ar:{title:"سوق الذهب الفاخر",subtitle:"استكشف المجوهرات العربية",support_title:"لم تجد المنتج؟",support_text:"تواصل معنا"},
+  zh:{title:"奢华黄金市场",subtitle:"探索黄金珠宝",support_title:"找不到产品？",support_text:"联系我们"},
+  es:{title:"Mercado de Oro",subtitle:"Explora joyas premium",support_title:"¿No encuentras?",support_text:"Contáctanos"},
+  id:{title:"Pasar Emas",subtitle:"Koleksi emas premium",support_title:"Tidak menemukan?",support_text:"Hubungi kami"},
+  ph:{title:"Gold Market",subtitle:"Premium gold jewelry",support_title:"Walang produkto?",support_text:"Contact us"},
+  kw:{title:"سوق الذهب",subtitle:"مجوهرات فاخرة",support_title:"لا يوجد المنتج؟",support_text:"اتصل بنا"},
+  fr:{title:"Marché de l'or",subtitle:"Bijoux premium",support_title:"Produit introuvable?",support_text:"Contactez-nous"}
+};
 
-  window.location.href = "auth.html";
+function changeLanguage(){
+  const lang=document.getElementById("langSelect").value;
+  const t=translations[lang];
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    el.innerText=t[el.dataset.i18n];
+  });
 }
 
 </script>
