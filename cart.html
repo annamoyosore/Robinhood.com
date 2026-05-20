@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Checkout - Amira Aldahab Gold</title>
+<title>Cart - Amira Aldahab Gold</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -40,7 +40,6 @@ body{
   padding:20px;
 }
 
-/* CART ITEM */
 .cart-item{
   display:flex;
   gap:15px;
@@ -54,8 +53,8 @@ body{
 .cart-item img{
   width:100px;
   height:100px;
-  border-radius:10px;
   object-fit:cover;
+  border-radius:10px;
 }
 
 .details h3{
@@ -72,7 +71,6 @@ body{
   margin-top:5px;
 }
 
-/* QTY */
 .qtyBox{
   display:flex;
   align-items:center;
@@ -83,14 +81,13 @@ body{
 .qtyBtn{
   width:35px;
   height:35px;
-  border:none;
   background:gold;
+  border:none;
   border-radius:6px;
   font-weight:700;
   cursor:pointer;
 }
 
-/* FORM */
 .form{
   background:#111;
   padding:15px;
@@ -107,7 +104,6 @@ input, textarea{
   outline:none;
 }
 
-/* BUTTONS */
 .btn{
   width:100%;
   padding:12px;
@@ -118,30 +114,15 @@ input, textarea{
   cursor:pointer;
 }
 
-.whatsapp{
-  background:#25D366;
-  color:white;
-}
-
-.flutterwave{
-  background:#ff9900;
-  color:white;
-}
-
-.invoice{
-  background:gold;
-  color:black;
-}
-
-.submit{
-  background:#2196F3;
-  color:white;
-}
+.whatsapp{background:#25D366;color:white;}
+.flutterwave{background:#ff9900;color:white;}
+.invoice{background:gold;color:black;}
+.submit{background:#2196F3;color:white;}
 
 .empty{
   text-align:center;
-  opacity:0.7;
   margin-top:50px;
+  opacity:0.7;
 }
 
 </style>
@@ -150,7 +131,7 @@ input, textarea{
 <body>
 
 <div class="header">
-  <div class="logo">🛒 Checkout - Amira Aldahab Gold</div>
+  <div class="logo">🛒 Cart - Amira Aldahab Gold</div>
 </div>
 
 <div class="container" id="cartBox"></div>
@@ -165,7 +146,7 @@ const box = document.getElementById("cartBox");
 function render(){
 
   if(!cart){
-    box.innerHTML = "<div class='empty'>No item in cart</div>";
+    box.innerHTML = "<div class='empty'>Cart is empty</div>";
     return;
   }
 
@@ -183,14 +164,12 @@ function render(){
 
         <div class="price">Price: $${cart.price}</div>
 
-        <div class="total">
-          Total: $<span id="total">${total}</span>
-        </div>
+        <div class="total">Total: $${total}</div>
 
         <div class="qtyBox">
 
           <button class="qtyBtn" onclick="changeQty(-1)">-</button>
-          <span id="qty">${quantity}</span>
+          <span>${quantity}</span>
           <button class="qtyBtn" onclick="changeQty(1)">+</button>
 
         </div>
@@ -208,17 +187,9 @@ function render(){
       <input id="address" placeholder="Delivery Address" />
       <textarea id="note" placeholder="Optional Note"></textarea>
 
-      <button class="btn whatsapp" onclick="payWhatsApp()">
-        Pay via WhatsApp Support
-      </button>
-
-      <button class="btn flutterwave" onclick="payFlutterwave()">
-        Pay Now (Card / Bank Transfer)
-      </button>
-
-      <button class="btn invoice" onclick="generateInvoice()">
-        Download Invoice (PDF Receipt)
-      </button>
+      <button class="btn whatsapp" onclick="payWhatsApp()">WhatsApp Pay</button>
+      <button class="btn flutterwave" onclick="payFlutterwave()">Pay Now</button>
+      <button class="btn invoice" onclick="generateInvoice()">Download Invoice</button>
 
       <button class="btn submit" onclick="submitOrder()">
         I Have Paid / Submit Order
@@ -249,38 +220,96 @@ function payWhatsApp(){
 
   const total = cart.price * quantity;
 
-  const msg =
-  `Hello Amira Gold, I want to order:
-
-Item: ${cart.name}
-Price: $${cart.price}
-Quantity: ${quantity}
+  const msg = `
+Order:
+${cart.name}
+Qty: ${quantity}
 Total: $${total}
-
-Customer:
 Name: ${name}
 Phone: ${phone}
-Address: ${address}`;
+Address: ${address}
+`;
 
-  window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg), "_blank");
+  window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg));
 }
 
 /* FLUTTERWAVE */
 function payFlutterwave(){
-
   const total = cart.price * quantity;
-
-  const url =
+  window.location.href =
   `https://checkout.flutterwave.com/v3/hosted/pay?amount=${total}&currency=USD`;
-
-  window.location.href = url;
 }
 
 /* INVOICE */
 function generateInvoice(){
 
-  const name = document.getElementById("fullname").value || "N/A";
-  const phone = document.getElementById("phone").value || "N/A";
-  const address = document.getElementById("address").value || "N/A";
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-  const total = cart
+  const total = cart.price * quantity;
+
+  doc.text("Amira Aldahab Gold Invoice", 20, 20);
+  doc.text("Product: " + cart.name, 20, 40);
+  doc.text("Qty: " + quantity, 20, 50);
+  doc.text("Total: $" + total, 20, 60);
+
+  doc.save("invoice.pdf");
+}
+
+/* SUBMIT ORDER → TELEGRAM */
+async function submitOrder(){
+
+  const name = document.getElementById("fullname").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+
+  if(!name || !phone || !address){
+    alert("Fill all details");
+    return;
+  }
+
+  const order = {
+    product: cart.name,
+    price: cart.price,
+    quantity,
+    total: cart.price * quantity,
+    customer: { name, phone, address },
+    date: new Date().toISOString()
+  };
+
+  try {
+
+    const res = await fetch("https://YOUR-PROJECT.vercel.app/api/send-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(order)
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+
+      localStorage.setItem("lastOrder", JSON.stringify({
+        ...order,
+        status: "Under Review"
+      }));
+
+      localStorage.removeItem("cartItem");
+
+      window.location.href = "order-success.html";
+
+    } else {
+      alert("Order failed");
+    }
+
+  } catch (err) {
+    alert("Failed to load server");
+  }
+}
+
+render();
+
+</script>
+
+</body>
+</html>
