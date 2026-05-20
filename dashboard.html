@@ -114,14 +114,14 @@ select{
   object-fit:cover;
 }
 
-/* VIDEO FIX */
-.card video{
+/* TIKTOK VIDEO */
+.card iframe{
   width:100%;
   height:200px;
-  object-fit:cover;
-  display:block;
+  border:none;
 }
 
+/* CONTENT */
 .card-content{
   padding:12px;
 }
@@ -214,20 +214,21 @@ button{
 <!-- PRODUCTS -->
 <div class="products">
 
-  <!-- 🎥 VIDEO ITEM (FIRST ITEM) -->
+  <!-- 🎥 TIKTOK VIDEO FIRST ITEM -->
   <div class="card">
 
-    <video autoplay muted loop>
-      <source src="store-video.mp4" type="video/mp4">
-    </video>
+    <iframe
+      src="https://www.tiktok.com/embed/v2/ZSxS8ruSQ"
+      allowfullscreen>
+    </iframe>
 
     <div class="card-content">
       <h3>Luxury Store Experience</h3>
-      <div class="price">Featured Video</div>
+      <div class="price">TikTok Showcase</div>
 
       <button class="buy"
-        onclick="buyNow('Luxury Store Experience Video',0,'store-video.mp4')">
-        View / Buy Experience
+        onclick="buyNow('Amira Store Video',0,'tiktok')">
+        View Experience
       </button>
 
     </div>
@@ -322,7 +323,6 @@ const databases = new Appwrite.Databases(client);
 const DATABASE_ID = "6970722d00269d80304f";
 const WALLET = "wallet";
 
-// WALLET
 async function loadWallet(){
   try{
     const user = await account.get();
@@ -340,45 +340,37 @@ async function loadWallet(){
 }
 loadWallet();
 
-// BUY
 function buyNow(name, price, image){
   localStorage.setItem("cartItem", JSON.stringify({name,price,image}));
   window.location.href="cart.html";
 }
 
-// ABOUT
 function openAbout(){
   window.location.href="about.html";
 }
 
-// TESTIMONIES
 function openTestimonies(){
   alert("⭐⭐⭐⭐⭐ Trusted Store\n⭐⭐⭐⭐⭐ Premium Gold\n⭐⭐⭐⭐⭐ Fast Delivery");
 }
 
-// SUPPORT
 function moreItems(){
   const msg = "Hello Amira Gold, I want more gold items not listed.";
   window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg), "_blank");
 }
 
-// ZANGI
 function openZangi(){
   window.open("https://zangi.com","_blank");
 }
 
-// SIGNUP
 function goSignup(){
   window.location.href="auth.html";
 }
 
-// LOGOUT
 async function logout(){
   try{ await account.deleteSession("current"); }catch{}
   window.location.href="auth.html";
 }
 
-// LANGUAGE
 function changeLanguage(){
   alert("Language feature active");
 }
