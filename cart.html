@@ -41,7 +41,7 @@ body{
   padding:20px;
 }
 
-/* CART CARD */
+/* CART ITEM */
 .cart-item{
   display:flex;
   gap:15px;
@@ -122,6 +122,23 @@ input, textarea{
   margin-top:50px;
 }
 
+.qtyBox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.qtyBtn{
+  width:35px;
+  height:35px;
+  border:none;
+  background:gold;
+  border-radius:6px;
+  font-weight:700;
+  cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -147,6 +164,8 @@ function render(){
     return;
   }
 
+  const total = cart.price * quantity;
+
   box.innerHTML = `
 
     <div class="cart-item">
@@ -154,9 +173,26 @@ function render(){
       <img src="${cart.image}" />
 
       <div class="details">
+
         <h3>${cart.name}</h3>
+
         <div class="price">Price: $${cart.price}</div>
-        <div class="total">Qty: ${quantity} | Total: $${cart.price * quantity}</div>
+
+        <div class="total">
+          Total: $<span id="total">${total}</span>
+        </div>
+
+        <!-- QUANTITY -->
+        <div class="qtyBox">
+
+          <button class="qtyBtn" onclick="changeQty(-1)">-</button>
+
+          <span id="qty">${quantity}</span>
+
+          <button class="qtyBtn" onclick="changeQty(1)">+</button>
+
+        </div>
+
       </div>
 
     </div>
@@ -188,6 +224,13 @@ function render(){
   `;
 }
 
+function changeQty(val){
+  quantity += val;
+  if(quantity < 1) quantity = 1;
+  render();
+}
+
+/* WHATSAPP */
 function payWhatsApp(){
 
   const name = document.getElementById("fullname").value;
@@ -199,13 +242,15 @@ function payWhatsApp(){
     return;
   }
 
+  const total = cart.price * quantity;
+
   const msg =
   `Hello Amira Gold, I want to order:
 
 Item: ${cart.name}
 Price: $${cart.price}
 Quantity: ${quantity}
-Total: $${cart.price * quantity}
+Total: $${total}
 
 Customer:
 Name: ${name}
@@ -226,7 +271,7 @@ function payFlutterwave(){
   window.location.href = url;
 }
 
-/* INVOICE GENERATOR */
+/* INVOICE */
 function generateInvoice(){
 
   const name = document.getElementById("fullname").value || "N/A";
@@ -234,6 +279,7 @@ function generateInvoice(){
   const address = document.getElementById("address").value || "N/A";
 
   const total = cart.price * quantity;
+
   const invoiceId = "INV-" + Math.floor(Math.random() * 99999999);
   const date = new Date().toLocaleString();
 
@@ -247,18 +293,18 @@ function generateInvoice(){
   doc.text("Invoice ID: " + invoiceId, 20, 35);
   doc.text("Date: " + date, 20, 45);
 
-  doc.text("Customer Details:", 20, 60);
+  doc.text("Customer:", 20, 60);
   doc.text("Name: " + name, 20, 70);
   doc.text("Phone: " + phone, 20, 80);
   doc.text("Address: " + address, 20, 90);
 
-  doc.text("Order Details:", 20, 110);
+  doc.text("Order:", 20, 110);
   doc.text("Product: " + cart.name, 20, 120);
   doc.text("Price: $" + cart.price, 20, 130);
   doc.text("Quantity: " + quantity, 20, 140);
   doc.text("Total: $" + total, 20, 150);
 
-  doc.text("Thank you for shopping with Amira Aldahab Gold", 20, 170);
+  doc.text("Thank you for your purchase!", 20, 170);
 
   doc.save(invoiceId + ".pdf");
 }
