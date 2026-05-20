@@ -28,7 +28,7 @@ function showRegister() {
 // ================= LOGIN =================
 document.getElementById("loginBtn").onclick = async function () {
 
-  const email = document.getElementById("loginEmail").value;
+  const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
 
   try {
@@ -38,8 +38,15 @@ document.getElementById("loginBtn").onclick = async function () {
       return;
     }
 
+    // DELETE OLD SESSION IF EXISTS
+    try {
+      await account.deleteSession("current");
+    } catch (e) {}
+
+    // CREATE NEW SESSION
     await account.createEmailSession(email, password);
 
+    // REDIRECT
     window.location.href = "dashboard.html";
 
   } catch (err) {
@@ -50,10 +57,10 @@ document.getElementById("loginBtn").onclick = async function () {
 // ================= REGISTER =================
 document.getElementById("registerBtn").onclick = async function () {
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const country = document.getElementById("country").value;
-  const phone = document.getElementById("phone").value;
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const country = document.getElementById("country").value.trim();
+  const phone = document.getElementById("phone").value.trim();
   const password = document.getElementById("password").value;
 
   try {
@@ -63,7 +70,12 @@ document.getElementById("registerBtn").onclick = async function () {
       return;
     }
 
-    // 1. CREATE ACCOUNT
+    // DELETE OLD SESSION IF EXISTS
+    try {
+      await account.deleteSession("current");
+    } catch (e) {}
+
+    // CREATE ACCOUNT
     const user = await account.create(
       Appwrite.ID.unique(),
       email,
@@ -71,10 +83,10 @@ document.getElementById("registerBtn").onclick = async function () {
       name
     );
 
-    // 2. LOGIN USER
+    // LOGIN USER
     await account.createEmailSession(email, password);
 
-    // 3. AUTO CREATE WALLET
+    // CREATE USER WALLET
     await databases.createDocument(
       DATABASE_ID,
       WALLET_COLLECTION_ID,
@@ -88,6 +100,7 @@ document.getElementById("registerBtn").onclick = async function () {
       }
     );
 
+    // REDIRECT
     window.location.href = "dashboard.html";
 
   } catch (err) {
