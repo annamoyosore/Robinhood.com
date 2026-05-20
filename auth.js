@@ -81,8 +81,7 @@ document.getElementById("registerBtn").onclick = async function () {
       Appwrite.ID.unique(),
       {
         userId: user.$id,
-        balance: 200,
-        locked: 0,
+        balance: 30,
         country: country,
         phone: phone,
         createdAt: new Date().toISOString()
