@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Amira Aldahab Gold Dashboard</title>
 
@@ -26,15 +26,18 @@ body{
 .header{
   padding:20px;
   background:#111;
+  border-bottom:1px solid rgba(255,215,0,0.2);
+}
+
+.top-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border-bottom:1px solid rgba(255,215,0,0.2);
 }
 
 .logo{
   color:gold;
-  font-size:1.5rem;
+  font-size:1.6rem;
   font-weight:700;
 }
 
@@ -43,6 +46,23 @@ body{
   color:black;
   padding:10px 16px;
   border-radius:12px;
+  font-weight:700;
+}
+
+/* TOP BUTTONS */
+.top-buttons{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+}
+
+.top-buttons button{
+  background:#2196F3;
+  color:white;
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
   font-weight:700;
 }
 
@@ -61,7 +81,7 @@ body{
   opacity:0.8;
 }
 
-/* GRID */
+/* PRODUCTS */
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -114,6 +134,42 @@ body{
   cursor:pointer;
 }
 
+/* SUPPORT */
+.support{
+  padding:20px;
+  text-align:center;
+}
+
+.support h2{
+  color:gold;
+  margin-bottom:10px;
+}
+
+.support p{
+  opacity:0.8;
+  margin-bottom:20px;
+}
+
+.support button{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.whatsapp{
+  background:#25D366;
+  color:white;
+}
+
+.zangi{
+  background:#ffb300;
+  color:black;
+}
+
 /* LOGOUT */
 .logout{
   margin:20px;
@@ -135,20 +191,42 @@ body{
 <!-- HEADER -->
 <div class="header">
 
-  <div class="logo">
-    Amira Aldahab Gold
+  <div class="top-row">
+
+    <div class="logo">
+      Amira Aldahab Gold
+    </div>
+
+    <div class="wallet">
+      Wallet: $<span id="balance">0</span>
+    </div>
+
   </div>
 
-  <div class="wallet">
-    Wallet: $<span id="balance">0</span>
+  <!-- TOP BUTTONS -->
+  <div class="top-buttons">
+
+    <button onclick="openAbout()">
+      About
+    </button>
+
+    <button onclick="openTestimonies()">
+      Testimonies
+    </button>
+
   </div>
 
 </div>
 
 <!-- HERO -->
 <div class="hero">
+
   <h1>Luxury Gold Marketplace</h1>
-  <p>Explore premium gold jewelry collections by Amira Aldahab</p>
+
+  <p>
+    Explore premium Arabian gold jewelry collections
+  </p>
+
 </div>
 
 <!-- PRODUCTS -->
@@ -156,104 +234,106 @@ body{
 
   <!-- 1 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?q=80&w=1200">
+    <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=1200">
     <div class="card-content">
       <h3>Royal Gold Necklace</h3>
       <div class="price">$120</div>
-      <button class="buy-btn" onclick="buyNow('Royal Gold Necklace',120,'https://images.unsplash.com/photo-1617038220319-276d3cfab638?q=80&w=1200')">
-        Buy Now
+      <button class="buy-btn"
+      onclick="buyNow('Royal Gold Necklace',120,'https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=1200')">
+      Buy Now
       </button>
     </div>
   </div>
 
   <!-- 2 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?q=80&w=1200">
+    <img src="https://images.unsplash.com/photo-1629224316810-9d8805b95e76?q=80&w=1200">
     <div class="card-content">
-      <h3>Classic Gold Chain</h3>
-      <div class="price">$90</div>
-      <button class="buy-btn" onclick="buyNow('Classic Gold Chain',90,'https://images.unsplash.com/photo-1603974372039-adc49044b6bd?q=80&w=1200')">
-        Buy Now
+      <h3>Arabian Gold Chain</h3>
+      <div class="price">$95</div>
+      <button class="buy-btn"
+      onclick="buyNow('Arabian Gold Chain',95,'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?q=80&w=1200')">
+      Buy Now
       </button>
     </div>
   </div>
 
   <!-- 3 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200">
+    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1200">
     <div class="card-content">
       <h3>Gold Wedding Ring</h3>
       <div class="price">$150</div>
-      <button class="buy-btn" onclick="buyNow('Gold Wedding Ring',150,'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200')">
-        Buy Now
+      <button class="buy-btn"
+      onclick="buyNow('Gold Wedding Ring',150,'https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1200')">
+      Buy Now
       </button>
     </div>
   </div>
 
   <!-- 4 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200">
+    <img src="https://images.unsplash.com/photo-1619119069152-a2b331eb392a?q=80&w=1200">
     <div class="card-content">
       <h3>Luxury Gold Bracelet</h3>
       <div class="price">$110</div>
-      <button class="buy-btn" onclick="buyNow('Luxury Gold Bracelet',110,'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200')">
-        Buy Now
+      <button class="buy-btn"
+      onclick="buyNow('Luxury Gold Bracelet',110,'https://images.unsplash.com/photo-1619119069152-a2b331eb392a?q=80&w=1200')">
+      Buy Now
       </button>
     </div>
   </div>
 
   <!-- 5 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=1200">
+    <img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=1200">
     <div class="card-content">
-      <h3>Diamond Gold Ring</h3>
-      <div class="price">$200</div>
-      <button class="buy-btn" onclick="buyNow('Diamond Gold Ring',200,'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=1200')">
-        Buy Now
+      <h3>Premium Gold Earrings</h3>
+      <div class="price">$85</div>
+      <button class="buy-btn"
+      onclick="buyNow('Premium Gold Earrings',85,'https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=1200')">
+      Buy Now
       </button>
     </div>
   </div>
 
   <!-- 6 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200">
+    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200">
     <div class="card-content">
-      <h3>Gold Earrings</h3>
-      <div class="price">$80</div>
-      <button class="buy-btn" onclick="buyNow('Gold Earrings',80,'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200')">
-        Buy Now
+      <h3>Royal Gold Set</h3>
+      <div class="price">$260</div>
+      <button class="buy-btn"
+      onclick="buyNow('Royal Gold Set',260,'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200')">
+      Buy Now
       </button>
     </div>
   </div>
 
-  <!-- 7 -->
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?q=80&w=1200">
-    <div class="card-content">
-      <h3>Wedding Gold Set</h3>
-      <div class="price">$300</div>
-      <button class="buy-btn" onclick="buyNow('Wedding Gold Set',300,'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?q=80&w=1200')">
-        Buy Now
-      </button>
-    </div>
-  </div>
-
-  <!-- 8 -->
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?q=80&w=1200">
-    <div class="card-content">
-      <h3>Premium Gold Pendant</h3>
-      <div class="price">$95</div>
-      <button class="buy-btn" onclick="buyNow('Premium Gold Pendant',95,'https://images.unsplash.com/photo-1611085583191-a3b181a88401?q=80&w=1200')">
-        Buy Now
-      </button>
-    </div>
-  </div>
-
-  <!-- ADD MORE UP TO 20 -->
-  
 </div>
 
+<!-- SUPPORT -->
+<div class="support">
+
+  <h2>
+    Can't find your desired gold product?
+  </h2>
+
+  <p>
+    Contact Amira Aldahab Gold directly for custom jewelry orders.
+  </p>
+
+  <button class="whatsapp" onclick="openWhatsApp()">
+    Contact on WhatsApp
+  </button>
+
+  <button class="zangi" onclick="openZangi()">
+    Contact on Zangi
+  </button>
+
+</div>
+
+<!-- LOGOUT -->
 <button class="logout" onclick="logout()">
   Logout
 </button>
@@ -274,10 +354,10 @@ const databases = new Appwrite.Databases(client);
 const DATABASE_ID = "6970722d00269d80304f";
 const WALLET_COLLECTION_ID = "wallet";
 
-// ================= LOAD USER WALLET =================
-async function loadWallet() {
+// ================= LOAD WALLET =================
+async function loadWallet(){
 
-  try {
+  try{
 
     const user = await account.get();
 
@@ -291,7 +371,8 @@ async function loadWallet() {
     );
 
     if(wallet){
-      document.getElementById("balance").innerText = wallet.balance;
+      document.getElementById("balance").innerText =
+      wallet.balance;
     }
 
   } catch(err){
@@ -306,14 +387,58 @@ loadWallet();
 function buyNow(name, price, image){
 
   localStorage.setItem("cartItem",
-    JSON.stringify({
-      name,
-      price,
-      image
-    })
-  );
+  JSON.stringify({
+    name,
+    price,
+    image
+  }));
 
   window.location.href = "cart.html";
+}
+
+// ================= ABOUT =================
+function openAbout(){
+
+  alert(
+`Amira Aldahab Gold is a luxury Arabian gold marketplace specializing in wedding rings, necklaces, bracelets, earrings, pendants, and premium gold jewelry collections.`
+  );
+}
+
+// ================= TESTIMONIES =================
+function openTestimonies(){
+
+  alert(
+`⭐️⭐️⭐️⭐️⭐️
+"Beautiful gold quality and fast delivery."
+
+⭐️⭐️⭐️⭐️⭐️
+"My wedding ring arrived perfectly."
+
+⭐️⭐️⭐️⭐️⭐️
+"Trusted gold marketplace with premium designs."`
+  );
+}
+
+// ================= WHATSAPP =================
+function openWhatsApp(){
+
+  const message =
+  "Hello Amira Aldahab Gold, I need a jewelry product not listed on the dashboard.";
+
+  const url =
+  "https://wa.me/18622726355?text=" +
+  encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+// ================= ZANGI =================
+function openZangi(){
+
+  const zangiLink =
+  "https://zangi.com/dl/conversation/123456789";
+
+  window.open(zangiLink, "_blank");
 }
 
 // ================= LOGOUT =================
