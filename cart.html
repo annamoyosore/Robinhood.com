@@ -8,7 +8,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- PDF LIBRARY -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -73,7 +72,7 @@ body{
   margin-top:5px;
 }
 
-/* QUANTITY */
+/* QTY */
 .qtyBox{
   display:flex;
   align-items:center;
@@ -188,13 +187,10 @@ function render(){
           Total: $<span id="total">${total}</span>
         </div>
 
-        <!-- QUANTITY -->
         <div class="qtyBox">
 
           <button class="qtyBtn" onclick="changeQty(-1)">-</button>
-
           <span id="qty">${quantity}</span>
-
           <button class="qtyBtn" onclick="changeQty(1)">+</button>
 
         </div>
@@ -203,7 +199,6 @@ function render(){
 
     </div>
 
-    <!-- DELIVERY FORM -->
     <div class="form">
 
       <h3 style="color:gold">Delivery Details</h3>
@@ -288,71 +283,4 @@ function generateInvoice(){
   const phone = document.getElementById("phone").value || "N/A";
   const address = document.getElementById("address").value || "N/A";
 
-  const total = cart.price * quantity;
-  const invoiceId = "INV-" + Math.floor(Math.random() * 99999999);
-  const date = new Date().toLocaleString();
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  doc.setFontSize(18);
-  doc.text("Amira Aldahab Gold Invoice", 20, 20);
-
-  doc.setFontSize(12);
-  doc.text("Invoice ID: " + invoiceId, 20, 35);
-  doc.text("Date: " + date, 20, 45);
-
-  doc.text("Customer:", 20, 60);
-  doc.text("Name: " + name, 20, 70);
-  doc.text("Phone: " + phone, 20, 80);
-  doc.text("Address: " + address, 20, 90);
-
-  doc.text("Order:", 20, 110);
-  doc.text("Product: " + cart.name, 20, 120);
-  doc.text("Price: $" + cart.price, 20, 130);
-  doc.text("Quantity: " + quantity, 20, 140);
-  doc.text("Total: $" + total, 20, 150);
-
-  doc.text("Thank you for your purchase!", 20, 170);
-
-  doc.save(invoiceId + ".pdf");
-}
-
-/* SUBMIT ORDER */
-function submitOrder(){
-
-  const name = document.getElementById("fullname").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-
-  if(!name || !phone || !address){
-    alert("Fill delivery details before submitting order");
-    return;
-  }
-
-  const order = {
-    product: cart.name,
-    price: cart.price,
-    quantity: quantity,
-    total: cart.price * quantity,
-    customer: {
-      name,
-      phone,
-      address
-    },
-    status: "Under Review",
-    date: new Date().toISOString()
-  };
-
-  localStorage.setItem("lastOrder", JSON.stringify(order));
-  localStorage.removeItem("cartItem");
-
-  window.location.href = "order-success.html";
-}
-
-render();
-
-</script>
-
-</body>
-</html>
+  const total = cart
