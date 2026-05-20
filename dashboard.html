@@ -1,86 +1,331 @@
 <!DOCTYPE html>
-  </style>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Amira Aldahab Gold Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#0d0d0d;
+  color:white;
+}
+
+/* HEADER */
+.header{
+  padding:20px;
+  background:#111;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,215,0,0.2);
+}
+
+.logo{
+  color:gold;
+  font-size:1.5rem;
+  font-weight:700;
+}
+
+.wallet{
+  background:gold;
+  color:black;
+  padding:10px 16px;
+  border-radius:12px;
+  font-weight:700;
+}
+
+/* HERO */
+.hero{
+  padding:25px;
+  text-align:center;
+}
+
+.hero h1{
+  color:gold;
+  margin-bottom:10px;
+}
+
+.hero p{
+  opacity:0.8;
+}
+
+/* GRID */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  background:#111;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(255,215,0,0.15);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.card-content{
+  padding:15px;
+}
+
+.card h3{
+  color:gold;
+  margin-bottom:8px;
+}
+
+.price{
+  font-size:1.1rem;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.buy-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:gold;
+  color:black;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* LOGOUT */
+.logout{
+  margin:20px;
+  width:calc(100% - 40px);
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#ff4444;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+</style>
 </head>
+
 <body>
 
-<header>
-  <h2>Amira Aldahab Gold</h2>
+<!-- HEADER -->
+<div class="header">
 
-  <button class="logout-btn" onclick="logout()">
-    Logout
-  </button>
-</header>
+  <div class="logo">
+    Amira Aldahab Gold
+  </div>
 
-<section class="hero">
+  <div class="wallet">
+    Wallet: $<span id="balance">0</span>
+  </div>
+
+</div>
+
+<!-- HERO -->
+<div class="hero">
   <h1>Luxury Gold Marketplace</h1>
-  <p>Premium gold bars, jewelry and investment collections.</p>
-</section>
+  <p>Explore premium gold jewelry collections by Amira Aldahab</p>
+</div>
 
-<section class="grid">
+<!-- PRODUCTS -->
+<div class="products">
 
+  <!-- 1 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1610375461369-d613b56489a2?q=80&w=1200&auto=format&fit=crop">
-
+    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?q=80&w=1200">
     <div class="card-content">
-      <h3>24K Gold Bars</h3>
-      <p>Certified investment gold bars.</p>
+      <h3>Royal Gold Necklace</h3>
+      <div class="price">$120</div>
+      <button class="buy-btn" onclick="buyNow('Royal Gold Necklace',120,'https://images.unsplash.com/photo-1617038220319-276d3cfab638?q=80&w=1200')">
+        Buy Now
+      </button>
     </div>
   </div>
 
+  <!-- 2 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?q=80&w=1200&auto=format&fit=crop">
-
+    <img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?q=80&w=1200">
     <div class="card-content">
-      <h3>Luxury Necklace</h3>
-      <p>Premium handcrafted gold jewelry.</p>
+      <h3>Classic Gold Chain</h3>
+      <div class="price">$90</div>
+      <button class="buy-btn" onclick="buyNow('Classic Gold Chain',90,'https://images.unsplash.com/photo-1603974372039-adc49044b6bd?q=80&w=1200')">
+        Buy Now
+      </button>
     </div>
   </div>
 
+  <!-- 3 -->
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1627293509201-cd0c78004389?q=80&w=1200&auto=format&fit=crop">
-
+    <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200">
     <div class="card-content">
-      <h3>Gold Coins</h3>
-      <p>Investment-grade gold coin collections.</p>
+      <h3>Gold Wedding Ring</h3>
+      <div class="price">$150</div>
+      <button class="buy-btn" onclick="buyNow('Gold Wedding Ring',150,'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200')">
+        Buy Now
+      </button>
     </div>
   </div>
 
-</section>
+  <!-- 4 -->
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200">
+    <div class="card-content">
+      <h3>Luxury Gold Bracelet</h3>
+      <div class="price">$110</div>
+      <button class="buy-btn" onclick="buyNow('Luxury Gold Bracelet',110,'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200')">
+        Buy Now
+      </button>
+    </div>
+  </div>
 
-<section class="support">
-  <a href="https://wa.me/2348000000000" class="wa">WhatsApp</a>
-  <a href="https://zangi.com" class="zg">Zangi</a>
-  <a href="https://tiktok.com" class="tk">TikTok</a>
-</section>
+  <!-- 5 -->
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=1200">
+    <div class="card-content">
+      <h3>Diamond Gold Ring</h3>
+      <div class="price">$200</div>
+      <button class="buy-btn" onclick="buyNow('Diamond Gold Ring',200,'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=1200')">
+        Buy Now
+      </button>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200">
+    <div class="card-content">
+      <h3>Gold Earrings</h3>
+      <div class="price">$80</div>
+      <button class="buy-btn" onclick="buyNow('Gold Earrings',80,'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200')">
+        Buy Now
+      </button>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?q=80&w=1200">
+    <div class="card-content">
+      <h3>Wedding Gold Set</h3>
+      <div class="price">$300</div>
+      <button class="buy-btn" onclick="buyNow('Wedding Gold Set',300,'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?q=80&w=1200')">
+        Buy Now
+      </button>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?q=80&w=1200">
+    <div class="card-content">
+      <h3>Premium Gold Pendant</h3>
+      <div class="price">$95</div>
+      <button class="buy-btn" onclick="buyNow('Premium Gold Pendant',95,'https://images.unsplash.com/photo-1611085583191-a3b181a88401?q=80&w=1200')">
+        Buy Now
+      </button>
+    </div>
+  </div>
+
+  <!-- ADD MORE UP TO 20 -->
+  
+</div>
+
+<button class="logout" onclick="logout()">
+  Logout
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
 
 <script>
-  const client = new Appwrite.Client();
 
-  client
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('YOUR_PROJECT_ID');
+const client = new Appwrite.Client();
 
-  const account = new Appwrite.Account(client);
+client
+.setEndpoint("https://nyc.cloud.appwrite.io/v1")
+.setProject("696f9104001dfedc5e1a");
 
-  async function checkUser() {
-    try {
-      await account.get();
-    } catch(error) {
-      window.location.href = 'auth.html';
+const account = new Appwrite.Account(client);
+const databases = new Appwrite.Databases(client);
+
+const DATABASE_ID = "6970722d00269d80304f";
+const WALLET_COLLECTION_ID = "wallet";
+
+// ================= LOAD USER WALLET =================
+async function loadWallet() {
+
+  try {
+
+    const user = await account.get();
+
+    const response = await databases.listDocuments(
+      DATABASE_ID,
+      WALLET_COLLECTION_ID
+    );
+
+    const wallet = response.documents.find(
+      doc => doc.userId === user.$id
+    );
+
+    if(wallet){
+      document.getElementById("balance").innerText = wallet.balance;
     }
+
+  } catch(err){
+
+    window.location.href = "auth.html";
   }
+}
 
-  checkUser();
+loadWallet();
 
-  async function logout() {
-    try {
-      await account.deleteSession('current');
+// ================= BUY =================
+function buyNow(name, price, image){
 
-      window.location.href = 'auth.html';
-    } catch(error) {
-      alert(error.message);
-    }
-  }
+  localStorage.setItem("cartItem",
+    JSON.stringify({
+      name,
+      price,
+      image
+    })
+  );
+
+  window.location.href = "cart.html";
+}
+
+// ================= LOGOUT =================
+async function logout(){
+
+  try{
+    await account.deleteSession("current");
+  } catch(e){}
+
+  window.location.href = "auth.html";
+}
+
 </script>
 
 </body>
