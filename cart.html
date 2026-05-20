@@ -73,6 +73,24 @@ body{
   margin-top:5px;
 }
 
+/* QUANTITY */
+.qtyBox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.qtyBtn{
+  width:35px;
+  height:35px;
+  border:none;
+  background:gold;
+  border-radius:6px;
+  font-weight:700;
+  cursor:pointer;
+}
+
 /* FORM */
 .form{
   background:#111;
@@ -116,27 +134,15 @@ input, textarea{
   color:black;
 }
 
+.submit{
+  background:#2196F3;
+  color:white;
+}
+
 .empty{
   text-align:center;
   opacity:0.7;
   margin-top:50px;
-}
-
-.qtyBox{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:10px;
-}
-
-.qtyBtn{
-  width:35px;
-  height:35px;
-  border:none;
-  background:gold;
-  border-radius:6px;
-  font-weight:700;
-  cursor:pointer;
 }
 
 </style>
@@ -219,6 +225,10 @@ function render(){
         Download Invoice (PDF Receipt)
       </button>
 
+      <button class="btn submit" onclick="submitOrder()">
+        I Have Paid / Submit Order
+      </button>
+
     </div>
 
   `;
@@ -279,7 +289,6 @@ function generateInvoice(){
   const address = document.getElementById("address").value || "N/A";
 
   const total = cart.price * quantity;
-
   const invoiceId = "INV-" + Math.floor(Math.random() * 99999999);
   const date = new Date().toLocaleString();
 
@@ -307,6 +316,38 @@ function generateInvoice(){
   doc.text("Thank you for your purchase!", 20, 170);
 
   doc.save(invoiceId + ".pdf");
+}
+
+/* SUBMIT ORDER */
+function submitOrder(){
+
+  const name = document.getElementById("fullname").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+
+  if(!name || !phone || !address){
+    alert("Fill delivery details before submitting order");
+    return;
+  }
+
+  const order = {
+    product: cart.name,
+    price: cart.price,
+    quantity: quantity,
+    total: cart.price * quantity,
+    customer: {
+      name,
+      phone,
+      address
+    },
+    status: "Under Review",
+    date: new Date().toISOString()
+  };
+
+  localStorage.setItem("lastOrder", JSON.stringify(order));
+  localStorage.removeItem("cartItem");
+
+  window.location.href = "order-success.html";
 }
 
 render();
