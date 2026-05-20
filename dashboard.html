@@ -107,10 +107,19 @@ select{
   border:1px solid rgba(255,215,0,0.15);
 }
 
+/* IMAGE */
 .card img{
   width:100%;
   height:200px;
   object-fit:cover;
+}
+
+/* VIDEO FIX */
+.card video{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  display:block;
 }
 
 .card-content{
@@ -178,7 +187,6 @@ button{
     <div class="wallet">Wallet: $<span id="balance">0</span></div>
   </div>
 
-  <!-- LANGUAGE -->
   <select id="langSelect" onchange="changeLanguage()">
     <option value="en">English</option>
     <option value="ar">Arabic</option>
@@ -190,7 +198,6 @@ button{
     <option value="fr">French</option>
   </select>
 
-  <!-- TOP BUTTONS -->
   <div class="top-buttons">
     <button onclick="openAbout()">About</button>
     <button onclick="openTestimonies()">Testimonies</button>
@@ -204,9 +211,29 @@ button{
   <p>Premium Arabian Gold Jewelry Collection</p>
 </div>
 
-<!-- PRODUCTS (7 GOLD ITEMS ONLY) -->
+<!-- PRODUCTS -->
 <div class="products">
 
+  <!-- 🎥 VIDEO ITEM (FIRST ITEM) -->
+  <div class="card">
+
+    <video autoplay muted loop>
+      <source src="store-video.mp4" type="video/mp4">
+    </video>
+
+    <div class="card-content">
+      <h3>Luxury Store Experience</h3>
+      <div class="price">Featured Video</div>
+
+      <button class="buy"
+        onclick="buyNow('Luxury Store Experience Video',0,'store-video.mp4')">
+        View / Buy Experience
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ITEM 2 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d">
     <div class="card-content">
@@ -216,6 +243,7 @@ button{
     </div>
   </div>
 
+  <!-- ITEM 3 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1629224316810-9d8805b95e76">
     <div class="card-content">
@@ -225,6 +253,7 @@ button{
     </div>
   </div>
 
+  <!-- ITEM 4 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e">
     <div class="card-content">
@@ -234,6 +263,7 @@ button{
     </div>
   </div>
 
+  <!-- ITEM 5 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1619119069152-a2b331eb392a">
     <div class="card-content">
@@ -243,6 +273,7 @@ button{
     </div>
   </div>
 
+  <!-- ITEM 6 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236">
     <div class="card-content">
@@ -252,21 +283,13 @@ button{
     </div>
   </div>
 
+  <!-- ITEM 7 -->
   <div class="card">
     <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f">
     <div class="card-content">
       <h3>Gold Jewelry Set</h3>
       <div class="price">$260</div>
       <button class="buy" onclick="buyNow('Gold Set',260,'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f')">Buy</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0">
-    <div class="card-content">
-      <h3>Diamond Gold Ring</h3>
-      <div class="price">$200</div>
-      <button class="buy" onclick="buyNow('Diamond Gold Ring',200,'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0')">Buy</button>
     </div>
   </div>
 
@@ -289,7 +312,6 @@ button{
 
 <script>
 
-// APPWRITE
 const client = new Appwrite.Client();
 client.setEndpoint("https://nyc.cloud.appwrite.io/v1")
 .setProject("696f9104001dfedc5e1a");
@@ -300,7 +322,7 @@ const databases = new Appwrite.Databases(client);
 const DATABASE_ID = "6970722d00269d80304f";
 const WALLET = "wallet";
 
-// WALLET LOAD
+// WALLET
 async function loadWallet(){
   try{
     const user = await account.get();
@@ -313,7 +335,7 @@ async function loadWallet(){
     }
 
   }catch{
-    window.location.href = "auth.html";
+    window.location.href="auth.html";
   }
 }
 loadWallet();
@@ -324,17 +346,17 @@ function buyNow(name, price, image){
   window.location.href="cart.html";
 }
 
-// ABOUT PAGE
+// ABOUT
 function openAbout(){
   window.location.href="about.html";
 }
 
-// TESTIMONIES PAGE
+// TESTIMONIES
 function openTestimonies(){
   alert("⭐⭐⭐⭐⭐ Trusted Store\n⭐⭐⭐⭐⭐ Premium Gold\n⭐⭐⭐⭐⭐ Fast Delivery");
 }
 
-// MORE ITEMS
+// SUPPORT
 function moreItems(){
   const msg = "Hello Amira Gold, I want more gold items not listed.";
   window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg), "_blank");
@@ -356,7 +378,7 @@ async function logout(){
   window.location.href="auth.html";
 }
 
-// LANGUAGE (simple)
+// LANGUAGE
 function changeLanguage(){
   alert("Language feature active");
 }
