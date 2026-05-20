@@ -1,14 +1,14 @@
 const client = new Appwrite.Client();
 
 client
-  .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject("YOUR_PROJECT_ID");
+  .setEndpoint("https://nyc.cloud.appwrite.io/v1")
+  .setProject("696f9104001dfedc5e1a");
 
 const account = new Appwrite.Account(client);
 const databases = new Appwrite.Databases(client);
 
-const DATABASE_ID = "YOUR_DATABASE_ID";
-const WALLET_COLLECTION_ID = "WALLET_COLLECTION_ID";
+const DATABASE_ID = "6970722d00269d80304f";
+const WALLET_COLLECTION_ID = "wallet";
 
 const status = document.getElementById("status");
 
