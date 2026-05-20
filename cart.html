@@ -1,74 +1,239 @@
 <!DOCTYPE html>
-    h1 {
-      color: gold;
-      text-align: center;
-      margin-bottom: 25px;
-    }
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    input,
-    textarea {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 10px;
-      background: #2a2a2a;
-      color: white;
-    }
+<title>Cart - Amira Aldahab Gold</title>
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 30px;
-      background: gold;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    button:hover {
-      background: white;
-    }
-  </style>
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#0d0d0d;
+  color:white;
+}
+
+/* HEADER */
+.header{
+  padding:20px;
+  background:#111;
+  border-bottom:1px solid rgba(255,215,0,0.2);
+}
+
+.logo{
+  color:gold;
+  font-size:1.5rem;
+  font-weight:700;
+}
+
+/* CART CONTAINER */
+.container{
+  padding:20px;
+}
+
+/* ITEM CARD */
+.cart-item{
+  display:flex;
+  gap:15px;
+  background:#111;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:15px;
+  border:1px solid rgba(255,215,0,0.15);
+}
+
+.cart-item img{
+  width:100px;
+  height:100px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.details{
+  flex:1;
+}
+
+.details h3{
+  color:gold;
+}
+
+.price{
+  margin:5px 0;
+}
+
+/* QTY */
+.qty{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.qty button{
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:6px;
+  font-weight:700;
+  cursor:pointer;
+  background:gold;
+}
+
+.remove{
+  background:red;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+/* SUMMARY */
+.summary{
+  background:#111;
+  padding:15px;
+  border-radius:15px;
+  border:1px solid rgba(255,215,0,0.15);
+}
+
+.total{
+  font-size:1.2rem;
+  font-weight:700;
+  color:gold;
+  margin-bottom:10px;
+}
+
+.checkout{
+  width:100%;
+  padding:12px;
+  background:gold;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.empty{
+  text-align:center;
+  opacity:0.7;
+  margin-top:50px;
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="cart-box">
-  <h1>Place Your Gold Order</h1>
+<div class="header">
+  <div class="logo">🛒 Cart - Amira Aldahab Gold</div>
+</div>
 
-  <input type="text" id="productName" readonly>
+<div class="container" id="cartContainer"></div>
 
-  <input type="number" id="quantity" placeholder="How many items do you want?" min="1">
+<div class="container">
 
-  <textarea id="deliveryAddress" placeholder="Delivery Address"></textarea>
+  <div class="summary">
+    <div class="total">Total: $<span id="total">0</span></div>
+    <button class="checkout" onclick="checkout()">Checkout via WhatsApp</button>
+  </div>
 
-  <button onclick="submitOrder()">Submit Order</button>
 </div>
 
 <script>
-  const selectedProduct = localStorage.getItem('selectedProduct');
 
-  document.getElementById('productName').value = selectedProduct;
+// GET ITEM FROM DASHBOARD
+let cart = JSON.parse(localStorage.getItem("cartItem"));
 
-  function submitOrder() {
-    const product = document.getElementById('productName').value;
-    const quantity = document.getElementById('quantity').value;
-    const address = document.getElementById('deliveryAddress').value;
+const container = document.getElementById("cartContainer");
+let quantity = 1;
 
-    if(!quantity || !address) {
-      alert('Please fill all fields');
-      return;
-    }
+function render(){
 
-    alert(
-      `Order Submitted Successfully!
-
-Product: ${product}
-Quantity: ${quantity}
-Address: ${address}`
-    );
+  if(!cart){
+    container.innerHTML = "<div class='empty'>No items in cart</div>";
+    return;
   }
+
+  container.innerHTML = `
+    <div class="cart-item">
+
+      <img src="${cart.image}" />
+
+      <div class="details">
+
+        <h3>${cart.name}</h3>
+
+        <div class="price">Price: $${cart.price}</div>
+
+        <div class="qty">
+          <button onclick="changeQty(-1)">-</button>
+          <span id="qty">${quantity}</span>
+          <button onclick="changeQty(1)">+</button>
+        </div>
+
+        <button class="remove" onclick="removeItem()">Remove</button>
+
+      </div>
+
+    </div>
+  `;
+
+  updateTotal();
+}
+
+function changeQty(val){
+  quantity += val;
+  if(quantity < 1) quantity = 1;
+  document.getElementById("qty").innerText = quantity;
+  updateTotal();
+}
+
+function updateTotal(){
+  if(!cart) return;
+  document.getElementById("total").innerText = cart.price * quantity;
+}
+
+function removeItem(){
+  localStorage.removeItem("cartItem");
+  cart = null;
+  render();
+  updateTotal();
+}
+
+function checkout(){
+
+  if(!cart){
+    alert("Cart is empty");
+    return;
+  }
+
+  const message =
+  `Hello Amira Gold, I want to order:
+
+Item: ${cart.name}
+Price: $${cart.price}
+Quantity: ${quantity}
+Total: $${cart.price * quantity}`;
+
+  const url =
+  "https://wa.me/18622726355?text=" +
+  encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+render();
+
 </script>
 
 </body>
