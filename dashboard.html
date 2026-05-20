@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+  </button>
+</header>
+
+<section class="hero">
+  <h1>Luxury Gold Marketplace</h1>
+  <p>Premium gold bars, jewelry and investment collections.</p>
+</section>
+
+<section class="grid">
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1610375461369-d613b56489a2?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="card-content">
+      <h3>24K Gold Bars</h3>
+      <p>Certified investment gold bars.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="card-content">
+      <h3>Luxury Necklace</h3>
+      <p>Premium handcrafted gold jewelry.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1627293509201-cd0c78004389?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="card-content">
+      <h3>Gold Coins</h3>
+      <p>Investment-grade gold coin collections.</p>
+    </div>
+  </div>
+
+</section>
+
+<section class="support">
+  <a href="https://wa.me/2348000000000" class="wa">WhatsApp</a>
+  <a href="https://zangi.com" class="zg">Zangi</a>
+  <a href="https://tiktok.com" class="tk">TikTok</a>
+</section>
+
+<script>
+  const client = new Appwrite.Client();
+
+  client
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject('YOUR_PROJECT_ID');
+
+  const account = new Appwrite.Account(client);
+
+  async function checkUser() {
+    try {
+      await account.get();
+    } catch(error) {
+      window.location.href = 'auth.html';
+    }
+  }
+
+  checkUser();
+
+  async function logout() {
+    try {
+      await account.deleteSession('current');
+
+      window.location.href = 'auth.html';
+    } catch(error) {
+      alert(error.message);
+    }
+  }
+</script>
+
+</body>
+</html>
