@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cart - Amira Aldahab Gold</title>
+<title>Checkout - Amira Aldahab Gold</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- PDF LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 
@@ -22,7 +25,6 @@ body{
   color:white;
 }
 
-/* HEADER */
 .header{
   padding:20px;
   background:#111;
@@ -31,16 +33,15 @@ body{
 
 .logo{
   color:gold;
-  font-size:1.5rem;
+  font-size:1.4rem;
   font-weight:700;
 }
 
-/* CART CONTAINER */
 .container{
   padding:20px;
 }
 
-/* ITEM CARD */
+/* CART CARD */
 .cart-item{
   display:flex;
   gap:15px;
@@ -58,69 +59,61 @@ body{
   object-fit:cover;
 }
 
-.details{
-  flex:1;
-}
-
 .details h3{
   color:gold;
 }
 
 .price{
-  margin:5px 0;
-}
-
-/* QTY */
-.qty{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:10px;
-}
-
-.qty button{
-  width:30px;
-  height:30px;
-  border:none;
-  border-radius:6px;
+  margin-top:5px;
   font-weight:700;
-  cursor:pointer;
-  background:gold;
 }
 
-.remove{
-  background:red;
-  color:white;
-  border:none;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-  margin-top:10px;
+.total{
+  color:gold;
+  margin-top:5px;
 }
 
-/* SUMMARY */
-.summary{
+/* FORM */
+.form{
   background:#111;
   padding:15px;
   border-radius:15px;
   border:1px solid rgba(255,215,0,0.15);
 }
 
-.total{
-  font-size:1.2rem;
-  font-weight:700;
-  color:gold;
-  margin-bottom:10px;
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  outline:none;
 }
 
-.checkout{
+/* BUTTONS */
+.btn{
   width:100%;
   padding:12px;
-  background:gold;
+  margin-top:12px;
   border:none;
   border-radius:10px;
   font-weight:700;
   cursor:pointer;
+}
+
+.whatsapp{
+  background:#25D366;
+  color:white;
+}
+
+.flutterwave{
+  background:#ff9900;
+  color:white;
+}
+
+.invoice{
+  background:gold;
+  color:black;
 }
 
 .empty{
@@ -135,101 +128,139 @@ body{
 <body>
 
 <div class="header">
-  <div class="logo">🛒 Cart - Amira Aldahab Gold</div>
+  <div class="logo">🛒 Checkout - Amira Aldahab Gold</div>
 </div>
 
-<div class="container" id="cartContainer"></div>
-
-<div class="container">
-
-  <div class="summary">
-    <div class="total">Total: $<span id="total">0</span></div>
-    <button class="checkout" onclick="checkout()">Checkout via WhatsApp</button>
-  </div>
-
-</div>
+<div class="container" id="cartBox"></div>
 
 <script>
 
-// GET ITEM FROM DASHBOARD
 let cart = JSON.parse(localStorage.getItem("cartItem"));
-
-const container = document.getElementById("cartContainer");
 let quantity = 1;
+
+const box = document.getElementById("cartBox");
 
 function render(){
 
   if(!cart){
-    container.innerHTML = "<div class='empty'>No items in cart</div>";
+    box.innerHTML = "<div class='empty'>No item in cart</div>";
     return;
   }
 
-  container.innerHTML = `
+  box.innerHTML = `
+
     <div class="cart-item">
 
       <img src="${cart.image}" />
 
       <div class="details">
-
         <h3>${cart.name}</h3>
-
         <div class="price">Price: $${cart.price}</div>
-
-        <div class="qty">
-          <button onclick="changeQty(-1)">-</button>
-          <span id="qty">${quantity}</span>
-          <button onclick="changeQty(1)">+</button>
-        </div>
-
-        <button class="remove" onclick="removeItem()">Remove</button>
-
+        <div class="total">Qty: ${quantity} | Total: $${cart.price * quantity}</div>
       </div>
 
     </div>
+
+    <!-- DELIVERY FORM -->
+    <div class="form">
+
+      <h3 style="color:gold">Delivery Details</h3>
+
+      <input id="fullname" placeholder="Full Name" />
+      <input id="phone" placeholder="Phone Number" />
+      <input id="address" placeholder="Delivery Address" />
+      <textarea id="note" placeholder="Optional Note"></textarea>
+
+      <button class="btn whatsapp" onclick="payWhatsApp()">
+        Pay via WhatsApp Support
+      </button>
+
+      <button class="btn flutterwave" onclick="payFlutterwave()">
+        Pay Now (Card / Bank Transfer)
+      </button>
+
+      <button class="btn invoice" onclick="generateInvoice()">
+        Download Invoice (PDF Receipt)
+      </button>
+
+    </div>
+
   `;
-
-  updateTotal();
 }
 
-function changeQty(val){
-  quantity += val;
-  if(quantity < 1) quantity = 1;
-  document.getElementById("qty").innerText = quantity;
-  updateTotal();
-}
+function payWhatsApp(){
 
-function updateTotal(){
-  if(!cart) return;
-  document.getElementById("total").innerText = cart.price * quantity;
-}
+  const name = document.getElementById("fullname").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
 
-function removeItem(){
-  localStorage.removeItem("cartItem");
-  cart = null;
-  render();
-  updateTotal();
-}
-
-function checkout(){
-
-  if(!cart){
-    alert("Cart is empty");
+  if(!name || !phone || !address){
+    alert("Fill delivery details");
     return;
   }
 
-  const message =
+  const msg =
   `Hello Amira Gold, I want to order:
 
 Item: ${cart.name}
 Price: $${cart.price}
 Quantity: ${quantity}
-Total: $${cart.price * quantity}`;
+Total: $${cart.price * quantity}
+
+Customer:
+Name: ${name}
+Phone: ${phone}
+Address: ${address}`;
+
+  window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg), "_blank");
+}
+
+/* FLUTTERWAVE */
+function payFlutterwave(){
+
+  const total = cart.price * quantity;
 
   const url =
-  "https://wa.me/18622726355?text=" +
-  encodeURIComponent(message);
+  `https://checkout.flutterwave.com/v3/hosted/pay?amount=${total}&currency=USD`;
 
-  window.open(url, "_blank");
+  window.location.href = url;
+}
+
+/* INVOICE GENERATOR */
+function generateInvoice(){
+
+  const name = document.getElementById("fullname").value || "N/A";
+  const phone = document.getElementById("phone").value || "N/A";
+  const address = document.getElementById("address").value || "N/A";
+
+  const total = cart.price * quantity;
+  const invoiceId = "INV-" + Math.floor(Math.random() * 99999999);
+  const date = new Date().toLocaleString();
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("Amira Aldahab Gold Invoice", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text("Invoice ID: " + invoiceId, 20, 35);
+  doc.text("Date: " + date, 20, 45);
+
+  doc.text("Customer Details:", 20, 60);
+  doc.text("Name: " + name, 20, 70);
+  doc.text("Phone: " + phone, 20, 80);
+  doc.text("Address: " + address, 20, 90);
+
+  doc.text("Order Details:", 20, 110);
+  doc.text("Product: " + cart.name, 20, 120);
+  doc.text("Price: $" + cart.price, 20, 130);
+  doc.text("Quantity: " + quantity, 20, 140);
+  doc.text("Total: $" + total, 20, 150);
+
+  doc.text("Thank you for shopping with Amira Aldahab Gold", 20, 170);
+
+  doc.save(invoiceId + ".pdf");
 }
 
 render();
