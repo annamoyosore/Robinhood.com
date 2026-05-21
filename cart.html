@@ -57,6 +57,10 @@ body{
   border-radius:10px;
 }
 
+.details{
+  flex:1;
+}
+
 .details h3{
   color:gold;
 }
@@ -69,6 +73,7 @@ body{
 .total{
   color:gold;
   margin-top:5px;
+  font-weight:700;
 }
 
 .qtyBox{
@@ -82,6 +87,7 @@ body{
   width:35px;
   height:35px;
   background:gold;
+  color:black;
   border:none;
   border-radius:6px;
   font-weight:700;
@@ -97,11 +103,13 @@ body{
 
 input, textarea{
   width:100%;
-  padding:10px;
+  padding:12px;
   margin-top:10px;
   border:none;
   border-radius:8px;
   outline:none;
+  background:#222;
+  color:white;
 }
 
 .btn{
@@ -114,15 +122,35 @@ input, textarea{
   cursor:pointer;
 }
 
-.whatsapp{background:#25D366;color:white;}
-.flutterwave{background:#ff9900;color:white;}
-.invoice{background:gold;color:black;}
-.submit{background:#2196F3;color:white;}
+.whatsapp{
+  background:#25D366;
+  color:white;
+}
+
+.flutterwave{
+  background:#ff9900;
+  color:white;
+}
+
+.invoice{
+  background:gold;
+  color:black;
+}
+
+.submit{
+  background:#2196F3;
+  color:white;
+}
 
 .empty{
   text-align:center;
   margin-top:50px;
   opacity:0.7;
+}
+
+.loading{
+  opacity:0.7;
+  pointer-events:none;
 }
 
 </style>
@@ -146,7 +174,11 @@ const box = document.getElementById("cartBox");
 function render(){
 
   if(!cart){
-    box.innerHTML = "<div class='empty'>Cart is empty</div>";
+    box.innerHTML = `
+      <div class="empty">
+        Cart is empty
+      </div>
+    `;
     return;
   }
 
@@ -156,21 +188,33 @@ function render(){
 
     <div class="cart-item">
 
-      <img src="${cart.image}" />
+      <img src="${cart.image}" alt="product">
 
       <div class="details">
 
         <h3>${cart.name}</h3>
 
-        <div class="price">Price: $${cart.price}</div>
+        <div class="price">
+          Price: $${cart.price}
+        </div>
 
-        <div class="total">Total: $${total}</div>
+        <div class="total">
+          Total: $${total}
+        </div>
 
         <div class="qtyBox">
 
-          <button class="qtyBtn" onclick="changeQty(-1)">-</button>
+          <button class="qtyBtn"
+            onclick="changeQty(-1)">
+            -
+          </button>
+
           <span>${quantity}</span>
-          <button class="qtyBtn" onclick="changeQty(1)">+</button>
+
+          <button class="qtyBtn"
+            onclick="changeQty(1)">
+            +
+          </button>
 
         </div>
 
@@ -180,18 +224,52 @@ function render(){
 
     <div class="form">
 
-      <h3 style="color:gold">Delivery Details</h3>
+      <h3 style="color:gold">
+        Delivery Details
+      </h3>
 
-      <input id="fullname" placeholder="Full Name" />
-      <input id="phone" placeholder="Phone Number" />
-      <input id="address" placeholder="Delivery Address" />
-      <textarea id="note" placeholder="Optional Note"></textarea>
+      <input
+        id="fullname"
+        placeholder="Full Name"
+      />
 
-      <button class="btn whatsapp" onclick="payWhatsApp()">WhatsApp Pay</button>
-      <button class="btn flutterwave" onclick="payFlutterwave()">Pay Now</button>
-      <button class="btn invoice" onclick="generateInvoice()">Download Invoice</button>
+      <input
+        id="phone"
+        placeholder="Phone Number"
+      />
 
-      <button class="btn submit" onclick="submitOrder()">
+      <input
+        id="address"
+        placeholder="Delivery Address"
+      />
+
+      <textarea
+        id="note"
+        placeholder="Optional Note">
+      </textarea>
+
+      <button
+        class="btn whatsapp"
+        onclick="payWhatsApp()">
+        WhatsApp Pay
+      </button>
+
+      <button
+        class="btn flutterwave"
+        onclick="payFlutterwave()">
+        Pay Directly Now
+      </button>
+
+      <button
+        class="btn invoice"
+        onclick="generateInvoice()">
+        Download Invoice
+      </button>
+
+      <button
+        id="submitBtn"
+        class="btn submit"
+        onclick="submitOrder()">
         I Have Paid / Submit Order
       </button>
 
@@ -201,17 +279,27 @@ function render(){
 }
 
 function changeQty(val){
+
   quantity += val;
-  if(quantity < 1) quantity = 1;
+
+  if(quantity < 1){
+    quantity = 1;
+  }
+
   render();
 }
 
-/* WHATSAPP */
+/* WHATSAPP PAYMENT */
 function payWhatsApp(){
 
-  const name = document.getElementById("fullname").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
+  const name =
+    document.getElementById("fullname").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const address =
+    document.getElementById("address").value.trim();
 
   if(!name || !phone || !address){
     alert("Fill delivery details");
@@ -221,90 +309,224 @@ function payWhatsApp(){
   const total = cart.price * quantity;
 
   const msg = `
-Order:
-${cart.name}
-Qty: ${quantity}
+🛒 Order Request
+
+Product: ${cart.name}
+Quantity: ${quantity}
 Total: $${total}
+
+Customer:
 Name: ${name}
 Phone: ${phone}
 Address: ${address}
 `;
 
-  window.open("https://wa.me/+18622726355?text=" + encodeURIComponent(msg));
+  window.open(
+    "https://wa.me/18622726355?text=" +
+    encodeURIComponent(msg),
+    "_blank"
+  );
 }
 
-/* FLUTTERWAVE */
+/* FLUTTERWAVE PAYMENT */
 function payFlutterwave(){
+
+  const name =
+    document.getElementById("fullname").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const address =
+    document.getElementById("address").value.trim();
+
+  if(!name || !phone || !address){
+    alert("Fill delivery details");
+    return;
+  }
+
   const total = cart.price * quantity;
-  window.location.href =
-  `https://flutterwave.com/pay/kqsgvbl9spjm/v3/hosted/pay?amount=${total}&currency=USD`;
+
+  // REPLACE WITH YOUR REAL LINK
+  const paymentLink =
+    "https://checkout.flutterwave.com/v3/hosted/pay";
+
+  const params = new URLSearchParams({
+    tx_ref: "AMIRA_" + Date.now(),
+    amount: total,
+    currency: "USD",
+    redirect_url:
+    "https://amirajweriesstore.vercel.app/order-success.html",
+
+    customer_email: "customer@email.com",
+    customer_name: name,
+    customer_phone_number: phone,
+
+    custom_title: "Amira Aldahab Gold",
+    custom_description: cart.name
+  });
+
+  window.open(
+    paymentLink + "?" + params.toString(),
+    "_blank"
+  );
 }
 
-/* INVOICE */
+/* PDF INVOICE */
 function generateInvoice(){
 
   const { jsPDF } = window.jspdf;
+
   const doc = new jsPDF();
 
   const total = cart.price * quantity;
 
+  doc.setFontSize(18);
   doc.text("Amira Aldahab Gold Invoice", 20, 20);
+
+  doc.setFontSize(12);
+
   doc.text("Product: " + cart.name, 20, 40);
-  doc.text("Qty: " + quantity, 20, 50);
-  doc.text("Total: $" + total, 20, 60);
+  doc.text("Price: $" + cart.price, 20, 50);
+  doc.text("Quantity: " + quantity, 20, 60);
+  doc.text("Total: $" + total, 20, 70);
+
+  doc.text(
+    "Generated: " +
+    new Date().toLocaleString(),
+    20,
+    90
+  );
 
   doc.save("invoice.pdf");
 }
 
-/* SUBMIT ORDER → TELEGRAM */
+/* SUBMIT ORDER */
 async function submitOrder(){
 
-  const name = document.getElementById("fullname").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
+  const btn =
+    document.getElementById("submitBtn");
+
+  const name =
+    document.getElementById("fullname").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const address =
+    document.getElementById("address").value.trim();
+
+  const note =
+    document.getElementById("note").value.trim();
 
   if(!name || !phone || !address){
-    alert("Fill all details");
+    alert("Fill all delivery details");
     return;
   }
 
+  if(!cart){
+    alert("Cart is empty");
+    return;
+  }
+
+  btn.innerText = "Submitting...";
+  btn.classList.add("loading");
+
   const order = {
+
     product: cart.name,
+
+    image: cart.image,
+
     price: cart.price,
-    quantity,
+
+    quantity: quantity,
+
     total: cart.price * quantity,
-    customer: { name, phone, address },
+
+    customer: {
+      name,
+      phone,
+      address,
+      note
+    },
+
+    status: "Under Review",
+
     date: new Date().toISOString()
   };
 
   try {
 
-    const res = await fetch("https://amirajweriesstore.vercel.app/api/send-order", {
+    const res = await fetch("/api/send-order", {
+
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+
+      headers: {
+        "Content-Type":"application/json"
+      },
+
       body: JSON.stringify(order)
+
     });
 
-    const data = await res.json();
+    const text = await res.text();
+
+    let data;
+
+    try{
+      data = JSON.parse(text);
+    }catch{
+
+      console.log(text);
+
+      alert("Invalid server response");
+
+      btn.innerText =
+      "I Have Paid / Submit Order";
+
+      btn.classList.remove("loading");
+
+      return;
+    }
 
     if(data.success){
 
-      localStorage.setItem("lastOrder", JSON.stringify({
-        ...order,
-        status: "Under Review"
-      }));
+      localStorage.setItem(
+        "lastOrder",
+        JSON.stringify(order)
+      );
 
       localStorage.removeItem("cartItem");
 
-      window.location.href = "order-success.html";
+      alert("Order submitted successfully");
+
+      window.location.href =
+        "order-success.html";
 
     } else {
-      alert("Order failed");
+
+      alert(
+        data.message ||
+        "Order submission failed"
+      );
+
     }
 
-  } catch (err) {
-    alert("Failed to load server");
+  } catch(err){
+
+    console.error(err);
+
+    alert(
+      "Failed to connect to server"
+    );
+
   }
+
+  btn.innerText =
+    "I Have Paid / Submit Order";
+
+  btn.classList.remove("loading");
 }
 
 render();
