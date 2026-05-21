@@ -230,14 +230,14 @@ Phone: ${phone}
 Address: ${address}
 `;
 
-  window.open("https://wa.me/18622726355?text=" + encodeURIComponent(msg));
+  window.open("https://wa.me/+18622726355?text=" + encodeURIComponent(msg));
 }
 
 /* FLUTTERWAVE */
 function payFlutterwave(){
   const total = cart.price * quantity;
   window.location.href =
-  `https://checkout.flutterwave.com/v3/hosted/pay?amount=${total}&currency=USD`;
+  `https://flutterwave.com/pay/kqsgvbl9spjm/v3/hosted/pay?amount=${total}&currency=USD`;
 }
 
 /* INVOICE */
@@ -279,7 +279,7 @@ async function submitOrder(){
 
   try {
 
-    const res = await fetch("https://YOUR-PROJECT.vercel.app/api/send-order", {
+    const res = await fetch("https://amirajweriesstore.vercel.app/api/send-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(order)
