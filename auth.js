@@ -38,16 +38,22 @@ document.getElementById("loginBtn").onclick = async function () {
       return;
     }
 
-    // DELETE OLD SESSION IF EXISTS
+    status.innerText = "Logging in...";
+
+    // REMOVE OLD SESSION
     try {
       await account.deleteSession("current");
     } catch (e) {}
 
-    // CREATE NEW SESSION
+    // LOGIN
     await account.createEmailSession(email, password);
 
+    status.innerText = "Login successful";
+
     // REDIRECT
-    window.location.href = "dashboard.html";
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 1000);
 
   } catch (err) {
     status.innerText = err.message;
@@ -65,12 +71,15 @@ document.getElementById("registerBtn").onclick = async function () {
 
   try {
 
+    // VALIDATION
     if (!name || !email || !country || !phone || !password) {
       status.innerText = "Fill all fields";
       return;
     }
 
-    // DELETE OLD SESSION IF EXISTS
+    status.innerText = "Creating account...";
+
+    // DELETE OLD SESSION
     try {
       await account.deleteSession("current");
     } catch (e) {}
@@ -86,24 +95,31 @@ document.getElementById("registerBtn").onclick = async function () {
     // LOGIN USER
     await account.createEmailSession(email, password);
 
-    // CREATE USER WALLET
+    // CREATE WALLET DOCUMENT
     await databases.createDocument(
       DATABASE_ID,
       WALLET_COLLECTION_ID,
       Appwrite.ID.unique(),
       {
         userId: user.$id,
-        balance: 100,
+        name: name,
+        email: email,
         country: country,
         phone: phone,
+        balance: 100,
         createdAt: new Date().toISOString()
       }
     );
 
+    status.innerText = "Account created successfully";
+
     // REDIRECT
-    window.location.href = "dashboard.html";
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 1500);
 
   } catch (err) {
+    console.log(err);
     status.innerText = err.message;
   }
 };
